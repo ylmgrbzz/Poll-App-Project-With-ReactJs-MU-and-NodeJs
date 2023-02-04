@@ -1,11 +1,18 @@
+// Edanur Türkeş 31.12.2022
+
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const port = 5000;
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const savePoll = require('./models/savePoll');
 
 app.use(bodyParser.json());
+app.use(express.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((_, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -83,6 +90,35 @@ app.get('/getpoll/:id', (req, res) => {
     .findOne({ pollid: x })
     .then((response) => res.send(response))
     .catch((error) => res.send(error));
+});
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = await User.findOne({ username, password });
+  if (!user) return res.status(401).send("Username or password is incorrect");
+
+  const access_token = jwt.sign({ sub: user._id }, SECRET, { expiresIn: "30m" });
+
+  res.send({ access_token });
+});
+
+const authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) return res.status(401).send("Authorization header is missing");
+
+  const token = authHeader.split(" ")[1];
+
+  jwt.verify(token, SECRET, (error, decoded) => {
+    if (error) return res.status(401).send("Token is invalid");
+
+    req.user = decoded;
+    next();
+  });
+};
+
+app.get("/protected", authenticateJWT, (req, res) => {
+  res.send("Welcome to protected route");
 });
 
 app.listen(port, () => console.log(`listening on port ${port}`));

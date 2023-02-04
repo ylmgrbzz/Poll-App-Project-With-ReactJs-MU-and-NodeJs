@@ -10,11 +10,11 @@ function Header() {
           <div className="d-flex align-items-baseline">
             <a className="page-link" href="/">
               <FontAwesomeIcon className="mr-2" icon={faPrayingHands} />
-              Opinion Poll
+              Yalım Gürbüz
             </a>
           </div>
           <p className="mt-2 mb-0 font-italic" style={{ fontSize: '1.125rem' }}>
-            Create anonymous polls for free
+            Poll Project
           </p>
         </div>
       </div>

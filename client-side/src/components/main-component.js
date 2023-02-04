@@ -16,6 +16,8 @@ import TextField from '@material-ui/core/TextField';
 import Notification from './notification';
 
 function MainContent() {
+
+
   const history = useHistory();
   const [questions, setQuestion] = useState({
     id: uuidv4(),
@@ -132,17 +134,6 @@ function MainContent() {
                   Complete below fields to create a poll
                 </p>
               </div>
-              <Link
-                to="/poll/?id=54bf4315-04a5-4b9d-882d-19e147942ed8"
-                className="text-decoration-none"
-              >
-                <span
-                  className=" align-self-end font-weight-normal"
-                  style={{ fontSize: '1.3rem' }}
-                >
-                  View a Demo Poll
-                </span>
-              </Link>
             </div>
             <div className="mt-4">
               <div className="d-flex flex-column ">
@@ -239,15 +230,14 @@ function MainContent() {
           </div>
         </form>
       </div>
+
       <p
         className="text-center font-weight-bold"
         style={{ fontSize: '1.3rem', color: 'skyblue' }}
       >
-        Built By Niraj
+        Built By Yalım Gürbüz
       </p>
-      <p className="text-center">
-        <FontAwesomeIcon className="display-4 text-dark" icon={faSpider} />
-      </p>
+
     </div>
   );
 }
